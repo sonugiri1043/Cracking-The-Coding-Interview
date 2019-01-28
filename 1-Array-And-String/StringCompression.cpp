@@ -17,7 +17,6 @@ string compressString( string &input ) {
   int index = -1;
 
   for( int i = 0; i < input.length();  ){
-
     count = 1;
     while( input[ i ] == input[ i + count ]
 	   && ( i + count <= input.length() ) ) {
