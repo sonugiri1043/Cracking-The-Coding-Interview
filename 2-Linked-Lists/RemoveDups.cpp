@@ -16,8 +16,7 @@ private:
 public:
   Node( int _data ) : data_( _data ), next_( NULL ) {}
   ~Node() {
-    if( next_ != NULL )
-      delete next_;
+    next_ = NULL;
   }
   Node * next() { return this->next_; }
   int data() { return data_; }
@@ -50,7 +49,6 @@ void removeDups( Node *node ) {
       // key found, remove currNode
       cout<< "Deleting " << currNode->data() << endl;
       prev->nextIs( currNode->next() );
-      currNode->nextIs( NULL );
       delete currNode;
       currNode = prev;
     }

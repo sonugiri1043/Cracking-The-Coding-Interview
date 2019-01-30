@@ -13,8 +13,7 @@ private:
 public:
   Node( int _data ) : data_( _data ), next_( NULL ) {}
   ~Node() {
-    if( next_ != NULL )
-      delete next_;
+    next_ = NULL;
   }
   Node * next() { return this->next_; }
   int data() { return data_; }
