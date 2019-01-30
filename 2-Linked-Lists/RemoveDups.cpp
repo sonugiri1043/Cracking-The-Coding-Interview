@@ -5,7 +5,7 @@
  */
 
 #include <iostream>
-#include <unordered_map>
+#include <set>
 
 using namespace std;
 
@@ -39,13 +39,13 @@ void printLL( Node *node ) {
 }
 
 void removeDups( Node *node ) {
-  unordered_map< int, bool > keyMap;
+  set< int > keySet;
   Node *currNode = node;
   Node *prev = NULL;
   while( currNode != NULL ) {
-    if( keyMap.find( currNode->data() ) == keyMap.end() ) {
+    if( keySet.count( currNode->data() ) == 0 ) {
       // key not found, insert key in set
-      keyMap.insert( make_pair( currNode->data(), true ) );
+      keySet.insert( currNode->data() );
     } else {
       // key found, remove currNode
       cout<< "Deleting " << currNode->data() << endl;
