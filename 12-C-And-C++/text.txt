@@ -1,0 +1,14 @@
+This file ise used by Read Last K lines cpp file. This is the first line.
+line 2
+line 3
+line 4
+line 5
+line 6
+line 7
+line 8
+line 9
+line 10
+line 11
+line 12
+second last line
+last line
