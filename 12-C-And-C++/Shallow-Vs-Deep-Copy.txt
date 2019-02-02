@@ -1,0 +1,32 @@
+Shallow Copy vs Deep Copy in C++
+
+A shallow copy copies all the member values from one object to another. A deep copy does
+all this and also deep copies any pointer objects.
+
+An example of shallow and deep copy is below.
+
+_______________________________________________________________________
+class String
+{
+     int   size;
+     char* data;
+};
+
+String s1( "Ace" );   // s1.size = 3  s1.data=0x0000F000
+
+String s2 = shallowCopy( s1 );
+ // s2.size =3 s2.data = 0X0000F000
+
+String s3 = deepCopy( s1 );
+ // s3.size =3 s3.data = 0x0000F00F
+ //                      ( With Ace copied to this location. )
+_______________________________________________________________________
+
+Note that shallow copy may cause a lot of programming runtime errors, especially with the
+creation and deletion of objects. Shallow copy should be used very carefully and only when
+a programmer really understands what he wants to do. In most cases, shallow copy is used when
+there is a need to pass information about a complex structure without actual duplication of data.
+One must also be careful with destruction of objects in a shallow copy.
+
+In real life, shallow copy is rarely used. Deep copy should be used in most cases, especially
+when the size of the copied structure is small.
