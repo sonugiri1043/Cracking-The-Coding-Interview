@@ -1,0 +1,42 @@
+Hash Table vs STL Map:
+
+In a hash table a value is stored by calling a hash function on a key. Values are not stored
+in sorted order. Additionally, since hash tables use the key to find the index that will store
+the value, an insert or lookup can be done in amortized O(1) time ( assuming few collisions in
+the hash table ). In a hash table, one must also handle potential collisions. This is often done
+by chaining, which means to create a linked list of all the values whose keys map to a particular
+index.
+
+An STL map inserts the key/value pairs into a binary search tree based on the keys. There is no
+need to handle collisions, and, since the tree is balanced, the insert and lookup time is guaranteed
+to be O(log N).
+
+How is a hash table implemented?
+A hash table is traditionally implemented with an array of linked lists. When we want to insert
+a key/value pair, we map the key to an index in the array using a hash function. The value is then
+inserted into the linked list at that position.
+
+Note that the elements in a linked list at a particular index of the array do not have the same key.
+Rather, hashFunction(key) is the same for these values. Therefore, in order to retrieve the value for
+a specific key, we need to store in each node both the exact key and the value.
+
+To summarize, the hash table will be implemented with an array of linked lists, where each node in the
+linked list holds two pieces of data: the value and the original key. In addition, we will want to note
+the following design criteria:
+
+1. We want to use a good hash function to ensure that the keys are well distributed. If they are not
+   well distributed, then we would get a lot of collisions and the speed to find an element would decline.
+
+2. No matter how good our hash function is, we will still have collisions, so we need a method for handling
+   them. This often means chaining via a linked list, but it's not the only way.
+
+3. We may also wish to implement methods to dynamically increase or decrease the hash table size depending
+   on capacity. For example, when the ratio of the number of elements to the table size exceeds a certain
+   threshold, we may wish to increase the hash table size. This would mean creating a new hash table and
+   transferring the entries from the old table to the new table. Because this is an expensive operation, we
+   want to be careful to not do it too often.
+
+
+What can be used instead of a hash table, if the number of inputs is small?
+You can use an STL map or a binary tree. Although this takes O( log(n) ) time, the number of inputs may
+be small enough to make this time negligible.
