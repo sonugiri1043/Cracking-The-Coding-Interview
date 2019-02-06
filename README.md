@@ -31,3 +31,17 @@
 4.  **Queue via Stacks**: Implement a MyQueue class which implements a queue using two stacks.
 5.  **Sort Stack**: Write a program to sort a stack such that the smallest items are on the top. You can use an additional temporary stack, but you may not copy the elements into any other data structure (such as an array). The stack supports the following operations: push, pop, peek, and isEmpty.
 6.  **Animal Shelter**: An animal shelter, which holds only dogs and cats, operates on a strictly"first in, first out" basis. People must adopt either the "oldest" (based on arrival time) of all animals at the shelter, or they can select whether they would prefer a dog or a cat (and will receive the oldest animal of that type). They cannot select which specific animal they would like. Create the data structures to maintain this system and implement operations such as enqueue, dequeueAny, dequeueDog, and dequeueCat. You may use the built-in Linked List data structure.
+
+# Chapter 12: C and C++
+
+1.  **Last K Lines**: Write a method to print the last K lines of an input file using C++.
+2.  **Reverse String**: Implement a function void reverse( char* str) in C or C++ which reverses a null-terminated string.
+3.  **Hash Table vs. STL Map**: Compare and contrast a hash table and an STL map. How is a hash table implemented? If the number of inputs is small, which data structure options can be used instead of a hash table?
+4.  **Virtual Functions**: How do virtual functions work in (++?
+5.  **Shallow vs. Deep Copy**: What is the difference between deep copy and shallow copy? Explain how you would use each.
+6.  **Volatile**: What is the significance of the keyword "volatile" in C?
+7.  **Virtual Base Class**: Why does a destructor in base class need to be declared virtual?
+8.  **Copy Node**: Write a method that takes a pointer to a Node structure as a parameter and returns a complete copy of the passed in data structure. The Node data structure contains two pointers to other Nodes.
+9.  **Smart Pointe**r: Write a smart pointer class. A smart pointer is a data type, usually implemented with templates, that simulates a pointer while also providing automatic garbage collection. It automatically counts the number of references to a SmartPointer<T* > object and frees the object of type T when the reference count hits zero.
+10.  **Malloc**: Write an aligned malloc and free function that supports allocating memory such that the memory address returned is divisible by a specific power of two. EXAMPLE align_malloc (1000 ,128) will return a memory address that is a multiple of 128 and that points to memory of size 1000 bytes. aligned_free () will free memory allocated by align_malloc.
+11.  **2D Alloc**: Write a function in C called my2DAlloe which allocates a two-dimensional array. Minimize the number of calls to malloc and make sure that the memory is accessible by the notation arr[i][j].
