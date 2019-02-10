@@ -1,0 +1,29 @@
+NOT operation
+A  ~A
+0   1
+1   0
+
+AND Operation
+
+A   B	A&B
+0   0	0
+0   1	0
+1   0	0
+1   1	1
+
+
+OR Operation
+
+A  B	A+B
+0  0	0
+0  1	1
+1  0	1
+1  1	1
+
+XOR Operation
+
+A   B	A^B
+0   0	0
+0   1	1
+1   0	1
+1   1	0
