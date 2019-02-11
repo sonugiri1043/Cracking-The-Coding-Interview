@@ -1,0 +1,4 @@
+Explain what the following code does: (( n & ( n-1 )) == 0).
+
+n and n-1 must have no 1 in common. The value of n is a power of 2.
+The expression checks weather n is a power of 2.
