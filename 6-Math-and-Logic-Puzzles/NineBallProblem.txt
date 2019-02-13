@@ -1,0 +1,7 @@
+The "nine balls" question is a classic interview question. You have nine balls. Eight are of the same weight,
+and one is heavier. You are given a balance which tells you only whether the left side or the right side is
+heavier. Find the heavy ball in just two uses of the scale.
+
+Sol: If we divide the balls into sets of three items each, we will know after just one weighing which set has the
+heavy one. For the final set of three balls, we simply repeat this: put one ball off to the side and weigh two.
+Pick the heavier of the two. Or, if the balls are the same weight, pick the third one.
