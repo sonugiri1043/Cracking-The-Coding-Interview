@@ -1,0 +1,7 @@
+You have two ropes, and each takes exactly one hour to burn. How would you use them to time exactly 15
+minutes? Note that the ropes are of uneven densities, so half the rope length-wise does not necessarily take
+half an hour to burn.
+
+Sol: Burn rope1 at both ends and rope2 at one end. When rope1 is completely burnt 30 mins would have
+passed. Now burn rope2 at other end also. The time elapsed since rope2 started burning from other end
+is 15 min.
