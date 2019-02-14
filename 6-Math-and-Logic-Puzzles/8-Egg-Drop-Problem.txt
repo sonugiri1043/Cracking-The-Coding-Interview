@@ -1,0 +1,32 @@
+The Egg Drop Problem:
+There is a building of 100 floors. If an egg drops from the Nth floor or
+above, it will break. If it's dropped from any floor below, it will not
+break. You're given two eggs. Find N, while minimizing the number of drops
+for the worst case.
+
+Solution:
+We observe that, regardless of how we drop Egg 1, Egg 2 must do a linear
+search ( from lowest to highest ) between the "breaking floor" and the next
+highest non-breaking floor.
+
+As a first try, suppose we drop an egg from the 10th floor, then the 20th, ...•
+If Egg 1 breaks on the first drop (floor 10), then we have at most 10 drops total.
+If Egg 1 breaks on the last drop (floor 100), then we have at most 19 drops total
+( floors 10,20, ... ,90, 100, then 91 through 99).
+
+That's pretty good, but all we've considered is the absolute worst case. We should
+do some "load balancing" to make those two cases more even.
+
+* A perfectly load-balanced system would be one in which Drops (Egg 1) + Drops (Egg 2) is always
+the same, regardless of where Egg 1 breaks.
+* For that to be the case, since each drop of Egg 1 takes one more step, Egg 2 is allowed one fewer step.
+* We must, therefore, reduce the number of steps potentially required by Egg 2 by one drop each time.
+* Egg 1 must start at floor X, then go up by X -1 floors, then X - 2, ... , until it gets to 100.
+
+X + ( X - 1) + ( X - 2 )+ ... +1 = 100
+
+X = 13.65
+X = 14 floor
+The number of drops of Egg 1 and Egg 2 always sum to the same thing: 14.
+
+As in many other maximizing / minimizing problems, the key in this problem is "worst case balancing'.
