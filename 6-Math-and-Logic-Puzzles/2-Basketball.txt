@@ -1,0 +1,26 @@
+Basketball:
+You have a basketball hoop and someone says that you can play one of two games.
+Game 1: You get one shot to make the hoop.
+Game 2: You get three shots and you have to make two of three shots.
+
+If p is the probability of making a particular shot, for which values of p should you pick one game
+or the other?
+
+Solution:
+
+Probability of winning Game 1:
+P( Game1 ) = p, by definition.
+
+Probability of winning Game 2:
+
+The probability of winning Game 2 is the probability of making exactly two shots out of three OR
+making all three shots. 
+In other words:
+P( Game 2 )  = P(making all shots) +  P(making 1 and 2 and missing 3)
+   	     + P(making 1 and 3 and missing 2) + P(missing 1 and making 2 and 3)
+ 
+             = p^3 + p*p*(p-1) + p*(p-1)*p + (p-1)*p*p
+             = p^3 + 3( 1- p )*p^2
+             = 3p^2 - 2p^3
+
+you should play Game 1 if P( Game1 ) > P( Game2 ).
