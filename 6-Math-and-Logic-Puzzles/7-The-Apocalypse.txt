@@ -1,0 +1,27 @@
+The Apocalypse:
+In the new post-apocalyptic world, the world queen is desperately concerned
+about the birth rate. Therefore, she decrees that all families should ensure
+that they have one girl or else they face massive fines. If all families abide
+by this policy-that is, they have continue to have children until they have
+one girl, at which point they immediately stop-what will the gender ratio of
+the new generation be? ( Assume that the odds of someone having a boy or a girl
+on any given pregnancy is equal.) Solve this out logically.
+
+Solution:
+Each family will have a sequence of zero or more boys followed by a single girl.
+That is, if "G" indicates a girl and "B" indicates a boy, the sequence of children
+will look like one of: G, BG, BBG, BBBG, BBBBG and so on.
+
+P(G) = 1/2. That is, 50% of families will have a girl first. The others will go
+        on to have more children.
+P(BG) = 1/4 Of those who have a second child (which is 50%), 50% of them will
+       have a girl the next time.
+P(BBG) = 1/8 . Of those who have a third child (which is 25%), 50% of them will
+        have a girl the next time.
+And so on.
+
+We know that every family has exactly one girl. The expected value of the number
+of boys is the probability of each sequence multiplied by the number of boys in
+that sequence. ~1. 
+
+So, gender ratio is going to be 1:1.
