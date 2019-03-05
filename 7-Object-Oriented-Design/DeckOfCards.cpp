@@ -5,36 +5,37 @@
  */
 
 #include <iostream>
+#include <vector>       // std::vector
+#include <algorithm>    // std::random_shuffle, std::sort
 
 using namespace std;
 
 /* Rank for cards */
-enum Rank {
-  ONE,
-  TWO,
-  THREE,
-  FOUR,
-  FIVE,
-  SIX,
-  SEVEN,
-  EIGHT,
-  NINE,
-  TEN,
-  JACK,
-  QUEEN,
-  KING,
-  ACE,
+enum Rank { ONE = 1,
+	    TWO,
+	    THREE,
+	    FOUR,
+	    FIVE,
+	    SIX,
+	    SEVEN,
+	    EIGHT,
+	    NINE,
+	    TEN,
+	    JACK,
+	    QUEEN,
+	    KING,
+	    ACE,
 };
 
 /* Card Type */
 enum Suit {
-  CLUB,
+  CLUB = 1,
   DIAMOND,
   HEART,
   SPADE,
 };
 
-/* Represents a single Card */
+/* Represents a Card */
 class Card {
   Suit _suit;
   Rank _rank;
@@ -45,6 +46,37 @@ public:
   }
   Rank rank() {
     return _rank;
+  }
+  
+  // Return 0 when equal
+  int compareTo( Card *card2 ) {
+    if( card2 == NULL ) {
+      return 1;
+    }
+    if( card2->suit() != this->suit() ) {
+      return card2->suit() - this->suit();
+    }
+    if( card2->rank() != this->rank() ) {
+      return card2->rank() - this->rank();
+    }
+    return 0;
+  }
+};
+
+class Deck {
+  vector< Card *> deckOfCards;
+
+public:
+  Deck() {}
+
+  void suffleCards() {
+    // using built-in random generator
+    random_shuffle( deckOfCards.begin(), deckOfCards.end() );
+  }
+  
+  void sortCards() {
+    // sort in non-decreasing order
+    sort( deckOfCards.begin(), deckOfCards.end() );
   }
 };
 
