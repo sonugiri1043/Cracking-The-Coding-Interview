@@ -6,5 +6,28 @@
   for( Obj o : circularArray ) notation.
  */
 
-class CircularArray {
+template< typename T > class CircularArray {
+  int capacity; // capacity of Circular array
+  int size;     // size of Circular array
+  int head;    // marks the..
+  T *array;
+
+ public:
+ CircularArray( int capacity ) : capacity( capacity )
+  {
+    size = 0;
+    head = -1;
+    array = new T[ capacity ];
+  }
+
+  void push_back( T item ) {
+    head = ( head + 1 ) % capacity;
+    array[ head % capacity ] = item;
+    size = ( size + 1 );
+    size = size > capacity ? capacity : size;
+  }
+
+  int getSize() {
+    return size;
+  }
 };
