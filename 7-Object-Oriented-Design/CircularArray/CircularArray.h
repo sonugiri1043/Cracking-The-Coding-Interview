@@ -6,6 +6,8 @@
   for( Obj o : circularArray ) notation.
  */
 
+// For iterator solution look at: https://github.com/sonugiri1043/Designing_CPP_Iterators
+
 template< typename T > class CircularArray {
   int capacity; // capacity of Circular array
   int size;     // size of Circular array
