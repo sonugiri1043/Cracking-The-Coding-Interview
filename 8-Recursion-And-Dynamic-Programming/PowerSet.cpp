@@ -16,10 +16,14 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
+#include <list>
 
 using std::cout;
 using std::endl;
 using std::vector;
+using std::map;
+using std::list;
 
 void getPowerSetV1( vector< char > & origSet ) {
   // Iterate through all no's from 0 - (2^(n)-1).
@@ -37,9 +41,40 @@ void getPowerSetV1( vector< char > & origSet ) {
   }
 }
 
+void getPowerSetV2( vector< char > & origSet ) {
+  /*
+    p( 0 ) = {}
+    p( 1 ) = {}, {a}
+    p( 2 ) = {}, {a}, {b}, {a,b}
+    p(n) = p(n-1) + nth element appended to all sets of size p(n-1)
+   */
+  list<list<char>> powerSet;
+  powerSet = { {} };
+  for( int i = 1; i <= origSet.size(); i++ ) {
+    list<list<char>> tmpPowerSet;
+    list<char> tmp;
+    for( auto it = powerSet.begin(); it != powerSet.end(); ++it ) {
+      tmp = *it;
+      tmpPowerSet.push_back( tmp );
+      tmp.push_back( origSet[ i-1 ] );
+      tmpPowerSet.push_back( tmp );
+    }
+    powerSet = tmpPowerSet;
+  }
+  
+  // output sets
+  for( auto it = powerSet.begin(); it != powerSet.end(); ++it ) {
+    for( auto it1 = (*it).begin(); it1 != (*it).end(); ++it1 ) {
+      cout << *it1 ;
+    }
+    cout << endl;
+  }
+}
+
 int main() {
   vector< char > origSet = { 'a', 'b', 'c', 'd' ,'e' };
   getPowerSetV1( origSet );
+  getPowerSetV2( origSet );
   return 0;
 }
 
