@@ -35,8 +35,20 @@ void getAllPermutations( string input ) {
   }
 }
 
+void getAllPermutationRecursive( string input, string prefix, int size ) {
+  if( prefix.length() == size ) {
+    cout<< prefix << endl;
+    return;
+  }
+  for( int i = 0; i < input.length(); i++ ) {
+    getAllPermutationRecursive( input.substr( 0, i ) + input.substr( i+1, input.length() ), prefix + input[ i ], size );
+  }
+}
+
 int main() {
   string input = "abcd";
   getAllPermutations( input );
+  cout<< "With Recursive approach" << endl;
+  getAllPermutationRecursive( input, "", input.length() );
   return 0;
 }
