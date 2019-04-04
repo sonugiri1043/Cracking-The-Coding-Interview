@@ -6,4 +6,26 @@
   EXAMPLE
   countEval( "1^0|0|1", false ) -> 2
   countEval( "0 & 0 & 0 & 1^1|0", true ) -> 10
+
+  Solution:
+  If it's an AND, then both right and left must be true.
+  countEval( left & right, true ) = countEval( left, true ) * countEval( right, true )
+
+  If it's an OR, then either the left or the right side must be true or both.
+  countEval( left | right, true ) = countEval( left, true ) * countEval( right, false )
+                                  + countEval( left, false ) * countEval( right, true )
+                                  + countEval( left, true ) * countEval( right, true )
+
+  If it's an XOR, then the left or the right side can be true, but not both.
+  countEval( left ^ right, true) = countEval( left, true ) * countEval( right, false )
+                                 + countEval( left, false ) * countEval( right, true )
+
+What if we were trying to make the result false instead? We can switch up the logic from above:
+
+  countEval( left & right, false ) = countEval( left, true ) * countEval( right, false )
+                                   + countEval( left, false ) * countEval( right, true )
+                                   + countEval( left, false ) * countEval( right, false )
+  countEval( left | right, false ) = countEval( left, false ) * countEval( right, false )
+  countEval( left ^ right, false ) = countEval( left, false ) * countEval( right, false )
+                                   + countEval( left, true ) * countEval( right, true )
  */
