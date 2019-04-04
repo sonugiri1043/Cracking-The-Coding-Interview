@@ -12,6 +12,27 @@
 using std::cout;
 using std::endl;
 
+int magicIndex( int arr[], int left, int right ) {
+  if( left > right ) {
+    return -1;
+  }
+
+  int mid = ( left + right )/2;
+  if( arr[ mid ] == mid ) {
+    return mid;
+  }
+  if( arr[ mid ] > mid ) {
+    // search in left half
+    return magicIndex( arr, left, mid - 1 );
+  } else {
+    // search in right half
+    return magicIndex( arr, mid + 1, right );
+  }
+  return -1;
+}
+
 int main() {
+  int arr[] = { -40, -20, -1, 1, 2, 3, 5, 7, 9, 12, 13 };
+  cout<< magicIndex( arr, 0, 11 ) << endl;
   return 0;
 }
