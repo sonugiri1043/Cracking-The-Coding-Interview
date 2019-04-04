@@ -31,6 +31,9 @@ int magicIndex( int arr[], int left, int right ) {
   return -1;
 }
 
+// if elements are not unique then we need to search recursively in left half and right half
+// i.e. same as linear searching.
+
 int main() {
   int arr[] = { -40, -20, -1, 1, 2, 3, 5, 7, 9, 12, 13 };
   cout<< magicIndex( arr, 0, 11 ) << endl;
