@@ -29,3 +29,25 @@ What if we were trying to make the result false instead? We can switch up the lo
   countEval( left ^ right, false ) = countEval( left, false ) * countEval( right, false )
                                    + countEval( left, true ) * countEval( right, true )
  */
+
+#include <iostream>
+#include <string>
+
+using std::cout;
+using std::endl;
+using std::string;
+
+int noOfWays( string expr, bool result ) {
+  if( expr.length() == 1 ) {
+    return str == "1" ? true : false;
+  }
+  
+}
+
+int main() {
+  string expr1 = "1^0|0|1";
+  string expr2 = "0&0&0&1^1|0";
+  cout<< noOfWays( expr1, false ) << endl;
+  cout<< noOfWays( expr2, true ) << endl;
+  return 0;
+}
