@@ -37,12 +37,51 @@ using std::cout;
 using std::endl;
 using std::string;
 
-int noOfWays( string expr, bool result ) {
-  if( expr.length() == 1 ) {
-    return str == "1" ? true : false;
-  }
-  
+bool truthValue( string expr ) {
+  return expr == "1" ? true : false;
 }
+
+int noOfWays( string expr, bool result ) {
+  if( expr.length() == 0 ) {
+    return 0;
+  }
+  if( expr.length() == 1 ) {
+    return truthValue( expr ) == result ? 1 : 0;
+  }
+
+  int noOfWay = 0;
+  for( int i = 1; i < expr.length(); i += 2 ) {
+    string leftExpr = expr.substr( 0, i );
+    string rightExpr = expr.substr( i+1, expr.length() );
+    int leftTrue = noOfWays( leftExpr, true );
+    int leftFalse = noOfWays( leftExpr, false );
+    int rightTrue = noOfWays( rightExpr, true );
+    int rightFalse = noOfWays( rightExpr, false );
+
+    if( expr[ i ] == '|' && result ) {
+      noOfWay += ( leftTrue * rightFalse ) + ( leftFalse * rightTrue ) +
+	( leftTrue * rightTrue );
+    }
+    if( expr[ i ] == '|' && !result ) {
+      noOfWay += leftFalse * rightFalse;
+    }
+    if( expr[ i ] == '&' && result ) {
+      noOfWay += leftTrue & rightTrue; 
+    }
+    if( expr[ i ] == '&' && !result ) {
+      noOfWay += ( leftTrue * rightTrue ) + ( leftFalse * rightTrue ) +
+	(leftFalse * rightFalse);
+    }
+    if( expr[ i ] == '^' && result ) {
+      noOfWay += ( leftTrue * rightFalse ) + ( leftFalse * rightTrue );
+    }
+    if( expr[ i ] == '^' && !result ) {
+      noOfWay += ( leftTrue * rightTrue ) + (leftFalse * rightFalse);
+    }
+  }
+  return noOfWay;
+} 
+
 
 int main() {
   string expr1 = "1^0|0|1";
