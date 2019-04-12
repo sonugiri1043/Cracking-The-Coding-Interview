@@ -31,15 +31,15 @@ in a different way. It is designed to scale better.
 Sharding means splitting the data across multiple machines while ensuring you have a way of figuring
 out which data is on which machine.
 A few common ways of partitioning include:
-- ** Vertical Partitioning:** This is basically partitioning by feature. For example, if you were building
+- **Vertical Partitioning:** This is basically partitioning by feature. For example, if you were building
 a social network, you might have one partition for tables relating to profiles, another one for messages,
 and so on. One drawback of this is that if one of these tables gets very large, you might need to repartition
 that database ( possibly using a different partitioning scheme ).
-- ** Key-Based (or Hash-Based) Partitioning:** This uses some part of the data (for example an ID) to
+- **Key-Based (or Hash-Based) Partitioning:** This uses some part of the data (for example an ID) to
 partition it. A very simple way to do this is to allocate N servers and put the data on mod (key % N).
 One issue with this is that the number of servers you have is effectively fixed. Adding additional
 servers means reallocating all the data - a very expensive task.
-- ** Directory-Based Partitioning:** In this scheme, you maintain a lookup table for where the data can be
+- **Directory-Based Partitioning:** In this scheme, you maintain a lookup table for where the data can be
 found. This makes it relatively easy to add additional servers, but it comes with two major drawbacks.
 First, the lookup table can be a single point of failure. Second, constantly accessing this table impacts
 performance.
@@ -60,11 +60,11 @@ waiting for a process to complete.
 
 ### Networking Metrics
 Some ofthe most important metrics around networking include:
-- ** Bandwidth: ** This is the maximum amount of data that can be transferred in a unit of time. It is typically
+- **Bandwidth:** This is the maximum amount of data that can be transferred in a unit of time. It is typically
 expressed in bits per second (or some similar ways, such as gigabytes per second).
-- ** Throughput: ** Whereas bandwidth is the maximum data that can be transferred in a unit of time,
+- **Throughput:** Whereas bandwidth is the maximum data that can be transferred in a unit of time,
 throughput is the actual amount of data that is transferred.
-** Latency: ** This is how long it takes data to go from one end to the other. That is, it is the delay between the
+- **Latency:** This is how long it takes data to go from one end to the other. That is, it is the delay between the
 sender sending information (even a very small chunk of data) and the receiver receiving it.
 
 ### MapReduce
@@ -83,11 +83,11 @@ more scalable.
 ### Considerations
 In addition to the earlier concepts to learn, you should consider the following issues when designing a
 system.
-** Failures: ** Essentially any part of a system can fail. You'll need to plan for many or all of these failures.
-** Availability and Reliability: ** Availability is a function of the percentage of time the system is operational.
+**Failures:** Essentially any part of a system can fail. You'll need to plan for many or all of these failures.
+**Availability and Reliability:** Availability is a function of the percentage of time the system is operational.
    Reliability is a function of the probability that the system is operational for a certain unit of time.
-** Read-heavy vs. Write-heavy: ** Whether an application will do a lot of reads or a lot of writes impacts the
+**Read-heavy vs. Write-heavy:** Whether an application will do a lot of reads or a lot of writes impacts the
    design. If it's write-heavy, you could consider queuing up the writes (but think about potential failure
    here!). If it's read-heavy, you might want to cache. Other design decisions could change as well.
-** Security: ** Security threats can, of course, be devastating for a system. Think about the types of issues a
+**Security:** Security threats can, of course, be devastating for a system. Think about the types of issues a
    system might face and design around those.
