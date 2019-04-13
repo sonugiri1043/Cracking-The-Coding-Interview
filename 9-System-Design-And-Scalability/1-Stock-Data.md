@@ -32,7 +32,7 @@ features we need to support. For example, we could easily and efficiently perfor
 all stocks having an open price greater than N and a closing price less than M:'
 - Rolling back, backing up data, and security could be provided using standard database features. We
 don't have to "reinvent the wheel," so it's easy for us to implement.
-- Reasonably easy for the clients to integrate into existing applications. SOL integration is a standard
+- Reasonably easy for the clients to integrate into existing applications. SQL integration is a standard
 feature in software development environments.
 
 What are the disadvantages of using a SOL database?
@@ -51,6 +51,7 @@ be aware of the disadvantages.
 ### Proposal 3
 XML is another great option for distributing the information. Our data has fixed format and fixed size:
 company_name, open, high, low, closing price. The XML could look like this:
+```python
  <root>
  <date value="200S-10-12">
  <company name="foo">
@@ -68,6 +69,7 @@ company_name, open, high, low, closing price. The XML could look like this:
  </date>
  <date value="2668-10-11"> . • • </date>
  </root>
+```
 
 The advantages of this approach include the following:
 - It's very easy to distribute, and it can also be easily read by both machines and humans. This is one
