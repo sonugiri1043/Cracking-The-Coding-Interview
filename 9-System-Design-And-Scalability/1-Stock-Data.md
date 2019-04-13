@@ -35,17 +35,17 @@ don't have to "reinvent the wheel," so it's easy for us to implement.
 - Reasonably easy for the clients to integrate into existing applications. SQL integration is a standard
 feature in software development environments.
 
-What are the disadvantages of using a SOL database?
+What are the disadvantages of using a SQL database?
 - It's much heavier weight than we really need. We don't necessarily need all the complexity of a SQL
 backend to support a feed of a few bits of information.
 - It's difficult for humans to be able to read it, so we'll likely need to implement an additional layer to view
 and maintain the data. This increases our implementation costs.
-- Security: While a SOL database offers pretty well defined security levels, we would still need to be very
+- Security: While a SQL database offers pretty well defined security levels, we would still need to be very
 careful to not give clients access that they shouldn't have. Additionally, even if clients aren't doing
 anything "malicious:' they might perform expensive and inefficient queries, and our servers would bear
 the costs of that.
 
-These disadvantages don't mean that we shouldn't provide SOL access. Rather, they mean that we should
+These disadvantages don't mean that we shouldn't provide SQL access. Rather, they mean that we should
 be aware of the disadvantages.
 
 ### Proposal 3
