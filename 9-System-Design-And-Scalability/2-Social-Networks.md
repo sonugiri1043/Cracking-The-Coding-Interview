@@ -22,11 +22,26 @@ Alternatively, I could do what's called a bidirectional breadth-first search. Th
 searches, one from the source and one from the destination. When the searches collide, we know we've found a path.
 
 In the implementation, we'll use two classes to help us. BFSData holds the data we need for a breadth-first
-search, such as the isVisi ted hash table and the toVisi t queue. PathNode will represent the path as
+search, such as the isVisited hash table and the toVisit queue. PathNode will represent the path as
 we're searching it, storing each Person and the previousNode we visited in this path.
 
 ```c++
+
+
 class BFSData {
-  
+  public:
+    queue<PathNode *> toVisit;
+    unordered_map< int, PathNode *> visited;
+      
+    bool isFinished() {
+       return toVisit.isEmpty();
+    }
 };
 ```
+
+**Question: Breadth-first search usually requires "marking" a node as visited. How do you do that in
+this case?**
+Usually, in BFS, we mark a node as visited by setting a visited flag in its node class. Here, we don't want to
+do that. There could be multiple searches going on at the same time, so it's a bad idea to just edit our data.
+Instead, we could mimic the marking of nodes with a hash table to look up a node id and determine whether it's
+been visited.
