@@ -26,8 +26,7 @@ search, such as the isVisited hash table and the toVisit queue. PathNode will re
 we're searching it, storing each Person and the previousNode we visited in this path.
 
 ```c++
-
-
+/* Look at code in this directory for shortest distance between 2 nodes in a graph */
 class BFSData {
   public:
     queue<PathNode *> toVisit;
@@ -38,6 +37,20 @@ class BFSData {
     }
 };
 ```
+
+### Step 2: Handle the Millions of Users
+When we deal with a service the size of Linkedln or Facebook, we cannot possibly keep all of our data on
+one machine. That means that our simple Person data structure doesn't quite work-our friends may not live on
+the same machine as we do. Instead, we can replace our list of friends with a list of their IDs, and traverse.
+
+- Optimization: Reduce machine jumps
+Jumping from one machine to another is expensive. Instead of randomly jumping from machine to machine
+with each friend, try to batch these jumps- e.g., if five of my friends live on one machine, I should look them
+up all at once.
+- Optimization: Smart division of people and machines
+People are much more likely to be friends with people who live in the same country as they do. Rather than
+randomly dividing people across machines, try to divide them by country, city, state, and so on. This will
+reduce the number of jumps.
 
 **Question: Breadth-first search usually requires "marking" a node as visited. How do you do that in
 this case?**
