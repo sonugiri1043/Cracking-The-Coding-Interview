@@ -1,13 +1,5 @@
-/*
-  Breadth First Traversal (or Search) for a graph is similar to Breadth First Traversal
-  of a tree. The only catch here is, unlike trees, graphs may contain cycles, so we may
-  come to the same node again. To avoid processing a node more than once, we use visited
-  hash table. For simplicity, it is assumed that all vertices are reachable from the starting
-  vertex.
-*/
+/* g++ shortestPathInGraph.cpp --std=c++11 */
 
-
-/* To compile use 'g++ bfs.cpp -o <output-file> --std=c++11' */
 #include <iostream>
 #include <list>
 #include <vector>
@@ -30,12 +22,13 @@ public:
     edges.resize( noOfVertices );
   }
 
-  void bfs( int source ) {
+  vector<int> shortestPath( int source, int dest ) {
     unordered_map<int, bool> visited( vertices.size() );
     for( int i = 0; i < vertices.size(); i++ ) {
       visited[ i ] = false;
     }
 
+    vector<int> path( vertices.size(), -1 );
     queue< int > toVisitQueue;
     toVisitQueue.push( source );
     visited[ source ] = true;
@@ -47,11 +40,16 @@ public:
 
       for( auto v : edges[ vertex ] ) {
 	if( !visited[ v ] ) {
+	  path[ v ] = vertex;
 	  toVisitQueue.push( v );
 	  visited[ v ] = true;
+	  if( v == dest ) {
+	    return path;
+	  }
 	}
       }
     }
+    return path;
   }
 
 };
@@ -64,10 +62,10 @@ int main() {
 	/    \
        /      \
       1        2
-      |\       |
-      |  \     |
-      |    \   |
-      |      \ |
+               |
+               |
+               |
+               |
       3------- 4
        \      /
         \    /
@@ -85,20 +83,27 @@ int main() {
   graph.edges[ 0 ].push_back(1);
   graph.edges[ 0 ].push_back(2);  
   graph.edges[ 1 ].push_back(0);
-  graph.edges[ 1 ].push_back(3);
-  graph.edges[ 1 ].push_back(4);
   graph.edges[ 2 ].push_back(0);
   graph.edges[ 2 ].push_back(4);
-  graph.edges[ 3 ].push_back(1);
   graph.edges[ 3 ].push_back(4);
   graph.edges[ 3 ].push_back(5);
-  graph.edges[ 4 ].push_back(1);
   graph.edges[ 4 ].push_back(2);
   graph.edges[ 4 ].push_back(3);
   graph.edges[ 4 ].push_back(5);
   graph.edges[ 5 ].push_back(3);
   graph.edges[ 5 ].push_back(5);
 
-  graph.bfs( 0 );
+  int src = 0;
+  int dest = 3;
+  vector<int> path = graph.shortestPath( 0, 3 );
+
+  // print path
+  int prev = 3;
+  while( prev != src ) {
+    cout<< prev << "<-";
+    prev = path[ prev ];
+  }
+  cout<< src << endl;
+
   return 0;
 }
