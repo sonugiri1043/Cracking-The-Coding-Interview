@@ -11,6 +11,7 @@ We can crawl the web using breadth-first search. Each time we visit a page, we g
 links and insert them at the end of a queue. If we've already visited a page, we ignore it.
 
 **This is great but what does it mean to visit page v? Is page v defined based on its content or its URL?**
+
 If it's defined based on its URL, we must recognize that URL parameters might indicate a completely
 different page. For example, the page www.github.com/Microsoft is totally different from the page
 www.github.com/Google. But, we can also append URL parameters arbitrarily to any URL without truly
@@ -32,12 +33,12 @@ Let's see how this would work.
 
 We have a database which stores a list of items we need to crawl. On each iteration, we select the highest
 priority page to crawl. We then do the following:
-- 1. Open up the page and create a signature of the page based on specific subsections of the page and its
+- Open up the page and create a signature of the page based on specific subsections of the page and its
 URL.
-- 2. Query the database to see whether anything with this signature has been crawled recently.
-- 3. If something with this signature has been recently crawled, insert this page back into the database at a	
+- Query the database to see whether anything with this signature has been crawled recently.
+- If something with this signature has been recently crawled, insert this page back into the database at a	
 low priority.
-- 4. If not, crawl the page and insert its links into the database.
+- If not, crawl the page and insert its links into the database.
 
 Under the above implementation, we never "complete" crawling the web, but we will avoid getting stuck
 in a loop of pages. If we want to allow for the possibility of "finishing" crawling the web ( which would
@@ -45,6 +46,7 @@ clearly happen only if the "web" were actually a smaller system, like an intrane
 priority that a page must have to be crawled.
 
 **Bot Traps**
+
 A bot trap is a section of a page that keeps generating new links with unique URLs and you will essentially
 get trapped in an "infinite loop" by following the links that are being served by that page. This is not exactly
 a loop, because a loop would be the result of visiting the same URL, but it's an infinite chain of URLs which
