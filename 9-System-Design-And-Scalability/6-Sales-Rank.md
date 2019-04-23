@@ -68,3 +68,25 @@ Instead, we'll just use a table like this.
 This is essentially like a circular array. Each day, we clear out the corresponding day of the week. On each
 purchase, we update the total sales count for that product on that day of the week, as well as the total
 count.
+
+We will also need a separate table to store the associations of product IDs and categories.
+
+| Prod ID | Category ID |
+
+To get the sales rank per category, we'll need to join these tables.
+
+**Database Writes are Very Frequent** 
+
+Even with this change, we'll still be hitting the database very frequently. With the amount of purchases that
+could come in every second, we'll probably want to batch up the database writes.
+
+Instead of immediately committing each purchase to the database, we could store purchases in some sort
+of in-memory cache (as well as to a log file as a backup). Periodically, we'll process the log / cache data,
+gather the totals, and update the database.
+
+> I We should quickly think about whether or not it's feasible to hold this in memory. If there are 10
+million products in the system, can we store each (along with a count) in a hash table? Yes. If each
+product 10 is four bytes (which is big enough to hold up to 4 billion unique IDs) and each count
+is four bytes (more than enough), then such a hash table would only take about 40 megabytes.
+Even with some additional overhead and substantial system growth, we would still be able to fit
+this all in memory.
