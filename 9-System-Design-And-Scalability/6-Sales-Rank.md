@@ -35,12 +35,9 @@ beginning. It's possible you will need to make other assumptions along the way.
 
 ### Step 3: Draw the Major Components
 We should now design just a basic, naive system that describes the major components. This is where you
-would go up to a whiteboard.
-							Purchase System
-      	       	       	                                   |
- 							   | (Orders added to DB)
-							   | 
-		 Front End <----- sales rank data <-------Database
+would go up to a whiteboard.					
+>        
+ Front End <----- sales rank data <-------Database<---(Orders added to DB)---Purchase System 
 
 In this simple design, we store every order as soon as it comes into the database. Every hour or so,
 we pull sales data from the database by category, compute the total sales, sort it, and store it in
