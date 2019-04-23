@@ -41,5 +41,30 @@ would go up to a whiteboard.
 
 In this simple design, we store every order as soon as it comes into the database. Every hour or so,
 we pull sales data from the database by category, compute the total sales, sort it, and store it in
-some sort of sales rank data cache (which is probably held in memory). The frontend just pulls the sales
-rank from this table, rather than hitting the standard database and doing its own analytics.
+some sort of sales rank data cache (which is probably held in memory). The frontend just pulls the
+sales rank from this table, rather than hitting the standard database and doing its own analytics.
+
+### Step 4: Identify the Key Issues
+**Analytics are Expensive**
+
+In the naive system, we periodically query the database for the number of sales in the past week for
+each product. This will be fairly expensive. That's running a query over all sales for all time.
+
+Our database just needs to track the total sales. We'll assume (as noted in the beginning of the solution)
+that the general storage for purchase history is taken care of in other parts of the system, and we just need
+to focus on the sales data analytics.
+
+Instead of listing every purchase in our database, we'll store just the total sales from the last week. Each
+purchase will just update the total weekly sales.
+
+Tracking the total sales takes a bit of thought. If we just use a single column to track the total sales
+over the past week, then we'll need to re-compute the total sales every day (since the specific days covered
+in the last seven days change with each day). That is unnecessarily expensive.
+
+Instead, we'll just use a table like this.
+
+| Product ID | Total | Sun | Mon | Tues | Wed | Thurs | Fri | Sat |
+
+This is essentially like a circular array. Each day, we clear out the corresponding day of the week. On each
+purchase, we update the total sales count for that product on that day of the week, as well as the total
+count.
