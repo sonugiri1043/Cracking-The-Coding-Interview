@@ -68,7 +68,7 @@ can treat it as unique. The drawback of this plan is that such a URL is not very
 hash it to a smaller value, but then that increases the odds of collision.
 
 We could do something very similar, though. We could just generate a 10-character sequence of letters
-and numbers, which gives us 3610 possible strings. Even with a billion URLs, the odds of a collision on any
+and numbers, which gives us 36^10 possible strings. Even with a billion URLs, the odds of a collision on any
 specific URL are very low.
 >This is not to say that the odds of a collision over the whole system are low. They are not. Anyone
 specific URL is unlikely to collide. However, after storing a billion URLs, we are very likely to have
