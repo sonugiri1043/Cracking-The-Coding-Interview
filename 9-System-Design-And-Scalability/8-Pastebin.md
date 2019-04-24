@@ -18,3 +18,26 @@ We can start with clarifying the specifics of this system.
 - The system gets heavy traffic and contains many millions of documents.
 - Traffic is not equally distributed across documents. Some documents get much more access than
   others.
+
+### Step 3: Draw the Major Components
+We can sketch out a simple design. We'll need to keep track of URLs and the files associated with them, as
+well as analytics for how often the files have been accessed.
+
+How should we store the documents? We have two options: we can store them in a database or we can
+store them on a file. Since the documents can be large and it's unlikely we need searching capabilities,
+storing them on a file is probably the better choice.
+
+A simple design like this might work well:
+>
+                 |--------- Server with files
+                 |
+URL to file DB --|--------- Server with files
+                 |
+                 |--------- Server with files
+
+Here, we have a simple database that looks up the location (server and path) of each file. When we have a
+request for a URL, we look up the location of the URL within the datastore and then access the file.
+
+Additionally, we will need a database that tracks analytics. We can do this with a simple data store that adds
+each visit (including timestamp, IP address, and location) as a row in a database. When we need to access
+the stats of each visit, we pull the relevant data in from this database.
