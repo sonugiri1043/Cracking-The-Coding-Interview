@@ -28,12 +28,13 @@ store them on a file. Since the documents can be large and it's unlikely we need
 storing them on a file is probably the better choice.
 
 A simple design like this might work well:
->
-                   |--------- Server with files
-                   |
-> URL to file DB --|--------- Server with files
-                   |
-                   |--------- Server with files
+```bash
+                  |--------- Server with files
+                  |
+ URL to file DB --|--------- Server with files
+                  |
+                  |--------- Server with files
+```
 
 Here, we have a simple database that looks up the location (server and path) of each file. When we have a
 request for a URL, we look up the location of the URL within the datastore and then access the file.
