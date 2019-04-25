@@ -44,3 +44,39 @@ characteristics of the system.
   realistic anyway, since we won't get the transaction data instantaneously.) It's probably pretty safe for
   them to be up to 24 hours delayed.
 It's okay to make different assumptions here, but you should explicitly state them to your interviewer.
+
+### Step 3: Draw the Major Components
+The most naive system would be one that pulls bank data on each login, categorizes all the data, and then
+analyzes the user's budget. This wouldn't quite fit the requirements, though, as we want email notifications
+on particular events.
+
+We can do a bit better.
+```bash
+        bank data Synchronizer
+	        |
+	        |
+	        ↓
+	Raw transaction data ------> Categorizer
+                                       |
+                                       |
+                                       ↓
+        Frontend <-------------->Categorized Transaction
+           ^                            |
+           |                            |
+	   ↓                            ↓
+        budget data <------------ budget analyzer
+
+```
+With this basic architecture, the bank data is pulled at periodic times (hourly or daily). The frequency may
+depend on the behavior of the users. Less active users may have their accounts checked less frequently.
+
+Once new data arrives, it is stored in some list of raw, unprocessed transactions. This data is then pushed to
+the categorizer, which assigns each transaction to a category and stores these categorized transactions in
+another datastore.
+
+The budget analyzer pulls in the categorized transactions, updates each user's budget per category, and
+stores the user's budget.
+
+The frontend pulls data from both the categorized transactions datastore as well as from the budget datastore.
+Additionally, a user could also interact with the frontend by changing the budget or the categorization
+of their transactions.
