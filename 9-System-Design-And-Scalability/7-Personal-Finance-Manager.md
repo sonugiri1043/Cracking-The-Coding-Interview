@@ -26,3 +26,21 @@ add them at a later point in time.
 - We'll assume that there's no concept of user-specified rules for assigning categories to transactions.
 
 This gives us a basic goal for what we want to build.
+
+### Make Reasonable Assumptions
+Now that we have the basic goal for the system, we should define some further assumptions about the
+characteristics of the system.
+- Adding or removing bank accounts is relatively unusual.
+- The system is write-heavy. A typical user may make several new transactions daily, although few users
+  would access the website more than once a week. In fact, for many users, their primary interaction might
+  be through email alerts.
+- Once a transaction is assigned to a category, it will only be changed if the user asks to change it. The
+  system will never reassign a transaction to a different category "behind the scenes'; even if the rules
+  change. This means that two otherwise identical transactions could be assigned to different categories
+  if the rules changed in between each transaction's date. We do this because it may confuse users if their
+  spending per category changes with no action on their part.
+- The banks probably won't push data to our system. Instead, we will need to pull data from the banks.
+- Alerts on users exceeding budgets probably do not need to be sent instantaneously. (That wouldn't be
+  realistic anyway, since we won't get the transaction data instantaneously.) It's probably pretty safe for
+  them to be up to 24 hours delayed.
+It's okay to make different assumptions here, but you should explicitly state them to your interviewer.
