@@ -149,7 +149,7 @@ Write code to simulate your approach.
 
 # Chapter 11: Testing
 
-1. **Mistake: **Find the mistake(s) in the following code:
+1. **Mistake:** Find the mistake(s) in the following code:
 ```c++
     unsigned int i;
     for (i = 100; i >= 0; --i)
