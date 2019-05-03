@@ -135,5 +135,75 @@ Additionally, it won't be easy to scale this to an NxN board.
 
 ### Solution 4: Designing for an NxN board
 There are a number of ways to implement this on an NxN board.
-### Nested For-Loops
+
+#### Nested For-Loops
 The most obvious way is through a series of nested for-loops.
+
+```c++
+Piece hasWon( vector< vector< Piece > board ) {
+   /* Check rows */
+   for( int i=0; i < board.size(); ++i ) {
+      Piece first = board[i][0];
+      if( first == Piece.Empty ) continue;
+      for( int j=1; j < board[i].size(); ++j ) {
+         if( first != board[i][j] ) {
+	    break;
+	 } else if( j == board[i].size() - 1 ) {
+	    // found a Winner
+	    return board[i][j];
+	 }
+      }
+   }
+
+   /* Check columns */
+   for( int j=0; j < board[0].size(); ++j ) {
+      Piece first = board[j][0];
+      if( first == Piece.Empty ) continue;
+      for( int i=1; j < board.size(); ++i ) {
+         if( first != board[i][j] ) {
+	    break;
+	 } else if( i == board.size() - 1 ) {
+	    // found a Winner
+	    return board[i][j];
+	 }
+      }
+   }   
+   
+   /* Check diagonal */
+   int row = 0;
+   int col = 0;
+   Piece first = board[row][col];
+   if( first != Piece.Empty ) {
+      for( int i=1; i < board.size(); i++ ) {
+         if( board[ row ][ col ] != first ) {
+      	    break;
+         } else if( row == board.size() - 1 ) {
+       	    return board[row][col];
+         } 
+         row += 1;
+         col += 1;
+      }
+   }
+
+   /* Check other diagonal */
+   int row = 0;
+   int col = board.size();
+   Piece first = board[row][col];
+   if( first !=	 Piece.Empty ) {
+      for( int i=1; i < board.size(); i++ ) {
+         if( board[ row ][ col ] != first ) {
+      	    break;
+         } else if( row == board.size() - 1 ) {
+   	    return board[row][col];
+         }
+         row += 1;
+         col -= 1;
+      }
+   }
+   return Piece.Empty;
+}
+
+One way that we can reuse the code better is to just pass in the values to another function that increments/
+decrements the rows and columns. The hasWon function now just needs the starting position and the
+amount to increment the row and column by.
+```
