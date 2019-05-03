@@ -37,11 +37,63 @@ int convertBoardToInt( vector< vector< Piece > > board ) {
 }
 ```
 
-
-
 ### Solution 2: If we know the last move
 If we know the very last move that was made (and we've been checking for a winner up until now), then we
 only need to check the row, column, and diagonal that overlaps with this position.
+
+```c++
+Piece hasWon( vector< vector< Piece> > board, int row, int column ) {
+   if( board.size() != board[0].size() )
+       return Piece.Empty;
+
+   Piece piece = vector[ row ][ column ];
+   if( piece == Piece.Empty )
+      return Piece.Empty;
+   
+   if( hasWonRow( board, row ) || hasWonColumn( board, column ) ) {
+      return Piece;
+   }
+   if( row == column && hasWonDiagonal( board, 1 ) ) ) {
+      return Piece;
+   }
+   if( row == ( board.size() - column - 1 ) && hasWonDiagonal( board, -1 ) ) {
+      return Piece;
+   }
+   return Piece.Empty;
+}
+
+bool hasWonRow( vector< vector< Piece> > board, int row ) {
+   for( int i=1; i < board[row].size(); ++i ) {
+      if( board[row][0] != board[row][i] ) {
+         return false;
+      }
+   }
+   return true;
+}
+
+bool hasWonColumn( vector< vector<Piece> > board, int col ) {
+   for( int j=1; j< board.size(); ++j ) {
+     if( board[0][col] != board[j][col] ) {
+     	return false;
+     }
+   }
+   return true;
+}
+
+bool hasWonDiagonal( vector< vector<Piece> > board, int direction ) {
+   /* direction is 1 or -1 */
+   int row = 0;
+   int column = direction == 1 ? 0 : board.size() - 1;
+   Piece first = board[row][column]
+   for( int i = 0; i < board.size; ++i ) {
+      if( first != board[ row ][ column ] ) {
+      }
+      row += 1;
+      column += direction;
+   }
+   return true;
+}
+```
 
 ### Solution 3: Designing for just a 3x3 board
 If we really only want to implement a solution for a 3x3 board, the code is relatively short and simple. The
