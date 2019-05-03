@@ -18,6 +18,27 @@ our tic-tac-toe board as an int, with each digit representing a piece (0 -> Empt
 We set up a hash table or array in advance with all possible boards as keys and the value indicating who has
 won.
 
+```c++
+enum Piece { Empty, Red, Blue };
+
+Piece hasWon( int board ) {
+   return winnerMap[ board ];
+}
+
+/* Using base 3 representation */
+int convertBoardToInt( vector< vector< Piece > > board ) {
+   int sum = 0;
+   for( int i = 0; i < board.size(); ++i ) {
+      for( int j = 0; j < board[i].size(); ++j ) {
+         sum = sum*3 + board[i][j];
+      }
+   }
+   return sum;
+}
+```
+
+
+
 ### Solution 2: If we know the last move
 If we know the very last move that was made (and we've been checking for a winner up until now), then we
 only need to check the row, column, and diagonal that overlaps with this position.
