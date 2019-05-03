@@ -100,6 +100,39 @@ If we really only want to implement a solution for a 3x3 board, the code is rela
 only complex part is trying to be clean and organized, without writing too much duplicated code.
 The code below checks each row, column, and diagonal to see if there is a winner.
 
+```c++
+Piece hasWon( vector< vector< Piece > > board ) {
+   for( int i=0; i < 3; i++ ) {
+      /* check rows */
+      if( hasWinner( board[i][0], board[i][1], board[i][2] ) {
+      	  return baord[i][0];
+      } 
+      /* check column */
+      if( hasWinner( board[0][i], board[1][i], board[2][i] ) {
+      	 return board[0][i];
+      }
+   }
+   // check diagonal
+   if( hasWinner( board[0][0], board[1][1], board[2][2] ) {
+      return board[0][0];
+   }
+   if( hasWinner( board[0][2], board[1][1], board[2][0] ) {
+       return board[0][2];
+   }
+   return Piece.Empty;
+}
+
+bool hasWinner( Piece a, Piece b, Piece c ) {
+   if( a == Piece.Empty || b == Piece.Empty || c == Piece.Empty ) {
+      return false;
+   }
+   return a == b && b == c;
+}
+```
+This is an okay solution in that it's relatively easy to understand what is going on. The problem is that the
+values are hard coded. It's easy to accidentally type the wrong indices.
+Additionally, it won't be easy to scale this to an NxN board.
+
 ### Solution 4: Designing for an NxN board
 There are a number of ways to implement this on an NxN board.
 ### Nested For-Loops
