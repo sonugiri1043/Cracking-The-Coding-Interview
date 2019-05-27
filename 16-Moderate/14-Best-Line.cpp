@@ -36,15 +36,14 @@ public:
   Point( int x, int y ) : x(x), y(y) {}
 };
 
-class Line {
-public:
-  double slope;
-  double intercept;
+double getHash( double slope, double intercept ) {
+  double hash;
+  hash = slope + intercept; // TODO: use better hash function
+  return hash;
+}
 
-  Line( double slope, double intercept ) : slope( slope ), intercept( intercept ) {}
-};
-
-unordered_map<Line, int> lines;
+// hash => count
+unordered_map<double, int> lines;
 
 void getLine( Point A, Point B ) {
   double slope = (B.y - A.y)/( B.x-B.y);
