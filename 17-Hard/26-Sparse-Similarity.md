@@ -28,58 +28,67 @@
 
 ## Solution
 
-### Naive solution:
+### Brute Force:
   The intersection means the number of elements in common. Therefore, we can just iterate
   through the first array (A) and check if each element is in the second array (B). If it is,
   increment an intersection variable.
 
-  union(A, B) = A + B - intersection(A, B)
+  union( A, B ) = A + B - intersection( A, B )
 
   Intersection would take O(|A|.|B|). We need to do this for all pairs of D documents. If we
   assume each document has at most W words then the runtime is O(D^2 W^2).
 
 
-  Slightly Optimized:
+### Slightly Better Brute Force
   We can throw all of A's elements into a hash table. Then we iterate through B, incrementing
   intersection every time we find an element in A.
   This takes O(A + B) time. If each array has size W and we do this for D arrays, then this takes O(D^2 W).
 
-  public class DocPair {
-2 public int docl, doc2j
-3
-4
-5
-6
-7
-8
-9
-16
-11
-12
-13
-14
-15
-16
-17
-18
-public DocPair(int d1, int d2) {
-doc1 d1j
-doc2 = d2j
-}
-@Override
-public boolean equals(Object 0) {
-if (0 instanceof DocPair) {
-DocPair p = (DocPair) OJ
-return p.doc1 == docl && p.doc2
-}
-return falsej
-}
-@Override
-doc2j
-19 public int hashCode() { return (docl * 31) A doc2j }
-26
+  We'll need to return a list of document pairs and their similarities. We'll use a DocPair class for this.
 
-  Slightly Better Brute Force (Alternate)
+  ```C++
+  // In C++, To be able to use std::unordered_map with a user-defined key-type, you need to define two things:
+  // 1. A hash function: a class that overrides operator() and calculates the hash value given an object of
+  //                     the key-type
+  // 2. A comparison function for equality: overloading operator==()
+
+  #include <unordered_map>
+  
+  class DocPair {
+     int doc1;
+     int doc2;
+
+     public:
+     DocPair( int doc1, int doc2 ) {
+        this->doc1 = doc1;
+      	this->doc2 = doc2;
+     }
+  
+     bool operator==( const DocPair &docPair ) const {
+        return( docPair.doc1 == this->doc1 &&docPair.doc2 ==this->doc2 );
+     }
+
+     size_t hash() const {
+        return (doc1 * 31 ) ^ doc2; 
+     }
+   };
+
+   class Hasher {
+      public:
+      size_t operator()( const DocPair & doc ) const {
+         return doc.hash();
+      }
+    };
+
+    class EqualFn {
+       public:
+       bool operator() ( const DocPair & d1, const DocPair & d2) const {
+          return d1 == d2;
+       }
+    };
+    std::unordered_map<DocPair, double, Hasher, EqualFn> docPairToScoreMap;
+```
+### Slightly Better Brute Force (Alternate)
   If the documents were sorted, you could compute the intersection between two documents by walking
   through them in sorted order, much like you would when doing a sorted merge of two arrays.
   This would take O(A + B) time. This is the same time as our current algorithm, but less space. Doing this
