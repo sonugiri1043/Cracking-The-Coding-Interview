@@ -116,7 +116,7 @@
 
   If we build a hash table that maps from a word to all documents that contain that word, we can very quickly
   know the documents that overlap with docA.
-
+```bash
   1 -> 16
   2 -> 19
   3 -> 13 , 16, 24
@@ -126,6 +126,7 @@
   8 -> 19
   9 -> 13, 16
   ...
+```
 
   When we want to know all the documents that overlap with docA, we just look up each of docNs items in
   this hash table. We'll then get a list of all documents with some overlap. Now, all we have to do is compare
@@ -169,9 +170,10 @@
 
   We could go through each document, look up the items in the hash table, and then count how many times
   each document appears in each item's lists. There's a more direct way to do it.
-  *1. As before, build a hash table for a list of documents.*
-  *2. Create a new hash table that maps from a document pair to an integer (which will indicate the size of
-  the intersection).*
-  *3. Read the first hash table by iterating through each list of documents.*
-  *4. For each list of documents, iterate through the pairs in that list. Increment the intersection count for
-  each pair.*
+
+  - 1. As before, build a hash table for a list of documents.
+  - 2. Create a new hash table that maps from a document pair to an integer (which will indicate the size of
+  the intersection).
+  - 3. Read the first hash table by iterating through each list of documents.
+   -4. For each list of documents, iterate through the pairs in that list. Increment the intersection count for
+  each pair.
