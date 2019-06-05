@@ -175,5 +175,5 @@
   - 2. Create a new hash table that maps from a document pair to an integer (which will indicate the size of
   the intersection).
   - 3. Read the first hash table by iterating through each list of documents.
-   -4. For each list of documents, iterate through the pairs in that list. Increment the intersection count for
+  - 4. For each list of documents, iterate through the pairs in that list. Increment the intersection count for
   each pair.
