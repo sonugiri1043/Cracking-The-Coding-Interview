@@ -19,6 +19,7 @@
   16: {32, 1, 9, 3, 5}
   19: {15, 29, 2, 6, 8, 7}
   24: {7, 10}
+
   Output:
   ID1, ID2 SIMILARITY
   13, 19  : 0.1
@@ -88,6 +89,7 @@
     };
     std::unordered_map<DocPair, double, Hasher, EqualFn> docPairToScoreMap;
 ```
+
 ### Slightly Better Brute Force (Alternate)
   If the documents were sorted, you could compute the intersection between two documents by walking
   through them in sorted order, much like you would when doing a sorted merge of two arrays.
@@ -97,66 +99,79 @@
   Since we don't know that the arrays are sorted, we could first sort them. This would take O(D * W log W)
   time. The full runtime then is O(D * W log W + D^2 W).
 
-  Optimized( Somewhat )
+### Optimized( Somewhat )
   At first, we might try various techniques that allow us to more quickly eliminate potential comparisons.
   For example, could we compute the min and max values in each array? If we did that, then we'd know that
   arrays with no overlap in ranges don't need to be compared.
-  The problem is that this doesn't really fix our runtime issue. Our best runtime thus far is 0(D2 W). With this
-  change, we're still going to be comparing all 0 (D2) pairs, but the O(W) part might go to O( 1) sometimes.
-  That O( D2) part is going to be a really big problem when D gets large.
-  Therefore, let's focus on reducing that 0 (D2) factor. That is the "bottleneck" in our solution.
+  The problem is that this doesn't really fix our runtime issue. Our best runtime thus far is O(D^2 W). With this
+  change, we're still going to be comparing all O(D^2) pairs, but the O(W) part might go to O( 1) sometimes.
+  That O(D^2) part is going to be a really big problem when D gets large.
+  Therefore, let's focus on reducing that O(D^2) factor. That is the "bottleneck" in our solution.
   
-  Suppose docA is {14, 15, laa, 9, 3}. For a document to have similarity > 0, it needs to have a 14, a 15,
-a 100, a 9, or a 3. How can we quickly gather a list of all documents with one of those elements?
-The slow (and, really, only way) is to read every single word from every single document to find the documents
-that contain a 14, a 15, a 100, a 9, or a 3. That will take 0 (DW) time. Not good.
-However, note that we're doing this repeatedly. We can reuse the work from one call to the next.
+  Suppose docA is {14, 15, 100, 9, 3}. For a document to have similarity > 0, it needs to have a 14, a 15,
+  a 100, a 9, or a 3. How can we quickly gather a list of all documents with one of those elements?
+  The slow (and, really, only way) is to read every single word from every single document to find the documents
+  that contain a 14, a 15, a 100, a 9, or a 3. That will take O(DW) time. Not good.
+  However, note that we're doing this repeatedly. We can reuse the work from one call to the next.
 
-If we build a hash table that maps from a word to all documents that contain that word, we can very quickly
-know the documents that overlap with docA.
+  If we build a hash table that maps from a word to all documents that contain that word, we can very quickly
+  know the documents that overlap with docA.
 
-When we want to know all the documents that overlap with docA, we just look up each of docNs items in
-this hash table. We'll then get a list of all documents with some overlap. Now, all we have to do is compare
-docA to each of those documents.
+  1 -> 16
+  2 -> 19
+  3 -> 13 , 16, 24
+  5 -> 16
+  6 -> 19
+  7 -> 19, 24
+  8 -> 19
+  9 -> 13, 16
+  ...
 
-If there are P pairs with similarity > 0, and each document has W words, then this will take 0 (PW) time (plus
-O(DW) time to create and read this hash table). Since we expect P to be much less than D2, this is much
-better than before.
+  When we want to know all the documents that overlap with docA, we just look up each of docNs items in
+  this hash table. We'll then get a list of all documents with some overlap. Now, all we have to do is compare
+  docA to each of those documents.
 
-Optimized( Better ):
-If we consider the runtime-O(PW + DW)-we probably can't get rid of the O(DW) factor. We have to
-touch each word at least once, and there are O( DW) words. Therefore, if there's an optimization to be made,
-it's probably in the O( PW) term.
-It would be difficult to eliminate the P part in O(PW) because we have to at least print all P pairs (which
-takes 0 (P) time).
+  If there are P pairs with similarity > 0, and each document has W words, then this will take O(PW) time (plus
+  O(DW) time to create and read this hash table). Since we expect P to be much less than D^2, this is much
+  better than before.
 
+### Optimized( Better ):
+  If we consider the runtime O(PW + DW) - we probably can't get rid of the O(DW) factor. We have to touch each word
+  at least once, and there are O( DW ) words. Therefore, if there's an optimization to be made, it's probably in
+  the O( PW) term.
+  It would be difficult to eliminate the P part in O(PW) because we have to at least print all P pairs (which
+  takes 0 (P) time).
 
-One way to tackle this is to analyze what information the hash table gives us. Consider this list of documents:
-12: {1, 5, 9}
-13: {5, 3, 1, 8}
-14: {4, 3, 2}
-15: {1, 5, 9, 8}
-17: {1, 6}
-If we look up document 12's elements in a hash table for this document, we'll get:
-1 -> {12, 13, 15, 17}
-5 -> {12, 13, 15}
-9 -> {12, 15}
-This tells us that documents 13, 15, and 17 have some similarity. Under our current algorithm, we would
-now need to compare document 12 to documents 13, 15, and 17 to see the number of elements document
-12 has in common with each (that is, the size of the intersection). The union can be computed from the
-document sizes and the intersection, as we did before.
-Observe, though, that document 13 appeared twice in the hash table, document 15 appeared three times,
-and document 17 appeared once. We discarded that information. But can we use it instead? What does it
-indicate that some documents appeared multiple times and others didn't?
+  One way to tackle this is to analyze what information the hash table gives us. Consider this list of documents:
+  12: {1, 5, 9}
+  13: {5, 3, 1, 8}
+  14: {4, 3, 2}
+  15: {1, 5, 9, 8}
+  17: {1, 6}
 
-Document 13 appeared twice because it has two elements (1 and 5) in common. Document 17 appeared
-once because it has only one element (1) in common. Document 15 appeared three times because it has
-three elements (1, 5, and 9) in common. This information can actually directly give us the size of the intersection.
-We could go through each document, look up the items in the hash table, and then count how many times
-each document appears in each item's lists. There's a more direct way to do it.
-1. As before, build a hash table for a list of documents.
-2. Create a new hash table that maps from a document pair to an integer (which will indicate the size of
-the intersection).
-3. Read the first hash table by iterating through each list of documents.
-4. For each list of documents, iterate through the pairs in that list. Increment the intersection count for
-each pair.
+  If we look up document 12's elements in a hash table for this document, we'll get:
+  1 -> {12, 13, 15, 17}
+  5 -> {12, 13, 15}
+  9 -> {12, 15}
+
+  This tells us that documents 13, 15, and 17 have some similarity. Under our current algorithm, we would
+  now need to compare document 12 to documents 13, 15, and 17 to see the number of elements document
+  12 has in common with each (that is, the size of the intersection). The union can be computed from the
+  document sizes and the intersection, as we did before.
+
+  Observe, though, that document 13 appeared twice in the hash table, document 15 appeared three times,
+  and document 17 appeared once. We discarded that information. But can we use it instead? What does it
+  indicate that some documents appeared multiple times and others didn't?
+
+  Document 13 appeared twice because it has two elements (1 and 5) in common. Document 17 appeared
+  once because it has only one element (1) in common. Document 15 appeared three times because it has
+  three elements (1, 5, and 9) in common. This information can actually directly give us the size of the intersection.
+
+  We could go through each document, look up the items in the hash table, and then count how many times
+  each document appears in each item's lists. There's a more direct way to do it.
+  *1. As before, build a hash table for a list of documents.*
+  *2. Create a new hash table that maps from a document pair to an integer (which will indicate the size of
+  the intersection).*
+  *3. Read the first hash table by iterating through each list of documents.*
+  *4. For each list of documents, iterate through the pairs in that list. Increment the intersection count for
+  each pair.*
