@@ -27,7 +27,7 @@ using std::string;
 
 class WordTransform {
   unordered_map<string, bool> dictionary;
-  unordered_map<string, bool> visited;
+  unordered_map<string, string> visited; // child <- parent pair, gives us path
   string letters;
 
   /* returns list of all words one edit distance at away from "input" */
@@ -37,8 +37,10 @@ class WordTransform {
     for( int pos = 0; pos < input.length(); ++pos ) {
       for( char c = 'a'; c <= 'z'; c++ ) {
         word = input.substr( 0, pos ) + c + input.substr( pos + 1 );
-        if( dictionary.find( word ) != dictionary.end() ) {
+        if( dictionary.find( word ) != dictionary.end() ||
+            visited.find( word ) != visited.end() ) {
           words.push_back( word );
+	  visited.insert( std::make_pair( word, input ) );
         }
       }
     }
@@ -49,7 +51,10 @@ public:
     if( start == end ) {
       return true;
     }
+
+    visited.insert( std::make_pair( start, "" ) );
     string word;
+    int noOfHops = 0;
     list< string > words;
     getWordsOneEditAway( start, words );
     while( !words.empty() ) {
@@ -60,17 +65,15 @@ public:
         if( word == end ) {
           return true;
         }
-	if( visited.find( word ) != visited.end() ) {
-           // we have already visited this word
-	   continue;
-        }
-        getWordsOneEditAway( word, nextLevelWords );
+	getWordsOneEditAway( word, nextLevelWords );
       }
       words = nextLevelWords;
       nextLevelWords.clear();
+      noOfHops += 1;
     }
     return false;
   }
+  // to get the path traverse the visited array from 'end'
 };
 ```
 
