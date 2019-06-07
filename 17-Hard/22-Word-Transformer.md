@@ -77,3 +77,88 @@ public:
 };
 ```
 
+### Optimal Solution
+  Imagine that the path between two nodes has length 4. With breadth-first search, we will visit about 26^4
+  nodes to find them. Breadth-first search spans out very quickly.
+  Instead, what if we searched out from the source and destination nodes simultaneously? In this case, the
+  breadth-first searches would collide after each had done about two levels each.
+  - Nodes travelled to from source: 26^2
+  - Nodes travelled to from destination: 26^2
+  - Total nodes: 26^2 + 26^2
+
+  This is much better than the traditional breadth-first search.
+
+```c++
+
+#include <unordered_map>
+#include <list>
+#include <string>
+
+using std::unordered_map;
+using std::list;
+using std::string;
+
+class WordTransform {
+  unordered_map<string, bool > dictionary;
+
+  /* Performs one level of breadth-first traversal*/
+  bool bfsOnWords( list<string> level, unordered_map< string, string > &startVisited,
+                   unordered_map< string, string > &endVisited ) {
+    string word;
+    list<string> level1;
+    while( !level.empty() ) {
+      word = level.front();
+      level.pop_front();
+
+      // Get all words one edit away from word and add to level1 list
+      // if it is in dictionary and has not been visited before
+      for( int pos = 0; pos < word.length(); ++pos ) {
+        string nextword;
+        for( char c = 'a'; c <= 'z'; c++ ) {
+          nextword = word.substr( 0, pos ) + c + word.substr( pos + 1 );
+          if( dictionary.find( word ) != dictionary.end() &&
+	      startVisited.find( word ) == startVisited.end() ) {
+            level1.push_back( word );
+            startVisited.insert( std::make_pair( nextword, word ) );
+          } else if( endVisited.find( word ) != endVisited.end() ) {
+	    // Both BFS from start and end has visited this
+            // we have found a route, return.
+            return true;
+          }
+        }
+      }
+
+    }
+    level = level1;
+    level1.clear();
+    return false;
+  }
+
+  bool reachable( string start, string end ) {
+    // visited hashmap for start and end
+    unordered_map< string, string > startVisited;
+    unordered_map< string, string > endVisited;
+    startVisited.insert( std::make_pair( start, "" ) );
+    endVisited.insert( std::make_pair( end, "" ) );
+
+    // list for start and end to be used in BFS
+    list< string > startLevel;
+    list< string > endLevel;
+    startLevel.push_back( start );
+    endLevel.push_back( end );
+
+    bool foundStart = false;
+    bool foundEnd = false;
+    while( !startLevel.empty() && !endLevel.empty() ) {
+      foundStart = bfsOnWords( startLevel, startVisited, endVisited );
+      if( foundStart )
+        break;
+      foundEnd = bfsOnWords( endLevel, endVisited, startVisited );
+      if( foundEnd )
+        break;
+    }
+    // TODO: Get the path from visited array
+    return foundEnd || foundStart;
+  }
+};
+```
