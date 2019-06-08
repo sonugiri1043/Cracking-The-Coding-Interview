@@ -6,6 +6,22 @@
 
   Input: 1 2 5 9 5 9 5 5 5
   Output: 5
+
+  Solution:
+  The Boyer–Moore majority vote algorithm is an algorithm for finding the majority of a sequence
+  of elements using linear time and constant space.
+  The algorithm finds a majority element, if there is one: that is, an element that occurs repeatedly
+  for more than half of the elements of the input. However, if there is no majority, the algorithm will
+  not detect that fact, and will still output one of the elements. A version of the algorithm that makes
+  a second pass through the data can be used to verify that the element found in the first pass really is
+  a majority.
+
+  Initialize an element m and a counter i with i = 0
+  For each element x of the input sequence:
+     If i = 0, then assign m = x and i = 1
+     else if m = x, then assign i = i + 1
+     else assign i = i − 1
+  Return m
 */
 
 #include <iostream>
