@@ -7,7 +7,7 @@
   Input: 1 2 5 9 5 9 5 5 5
   Output: 5
 
-  Solution:
+  Solution: Boyer–Moore majority vote algorithm
   The Boyer–Moore majority vote algorithm is an algorithm for finding the majority of a sequence
   of elements using linear time and constant space.
   The algorithm finds a majority element, if there is one: that is, an element that occurs repeatedly
@@ -22,6 +22,19 @@
      else if m = x, then assign i = i + 1
      else assign i = i − 1
   Return m
+
+
+  This can easily be extended to:
+  Given an array of size n and a number k, find all elements that appear more than n/k times.
+  Solution:
+  1.Create a temporary array of size (k-1) to store elements and their counts.
+  2.Traverse through the input array and update temp[] (add/remove an element or increase/decrease count)
+    for every traversed element.
+  3.Iterate through final (k-1) potential candidates (stored in temp[]). or every element, check if it
+    actually has count more than n/k.
+    
+   what to do when temp[] is full and we see a new element – we decrease count of every element by 1 in temp[].
+   If the count reaches zero then we remove an element.
 */
 
 #include <iostream>
