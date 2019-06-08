@@ -24,8 +24,19 @@
   Return m
 
 
+  Number which appears more than n/3 times in an array
+
+  Start with two empty candidate slots and two counters set to 0.
+  for each item:
+     if it is equal to either candidate, increment the corresponding count
+     else if there is an empty slot (i.e. a slot with count 0), put it in that slot and set the count to 1
+     else reduce both counters by 1
+   At the end, make a second pass over the array to check whether the candidates really do have the required count.
+
+
   This can easily be extended to:
   Given an array of size n and a number k, find all elements that appear more than n/k times.
+
   Solution:
   1.Create a temporary array of size (k-1) to store elements and their counts.
   2.Traverse through the input array and update temp[] (add/remove an element or increase/decrease count)
