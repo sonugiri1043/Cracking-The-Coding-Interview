@@ -26,6 +26,10 @@
   
   Whenever we return the same difference, then we know we have found an equal subarray. To find the
   biggest subarray, we just have to find the two indices farthest apart with the same value.
+
+  Alternate Solution:
+  Replace A with 1 and B with -1. Use kudane algo to find longest array with 0 sum.
+
 */
 
 // g++ 5-Letters-And-Numbers.cpp --std=c++11
