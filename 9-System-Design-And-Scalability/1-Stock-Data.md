@@ -94,3 +94,17 @@ even if this wasn't a procedure we "expected" them to need.
 So which one of these would we use? There's no clear answer. The pure text file solution is probably a
 bad choice, but you can make a compelling argument for the SQL or XML solution, with or without a web
 service.
+
+**#Proposal 4**
+
+The clients can send a GraphQL query to the API we created, and then get exactly what they need, nothing more nothing less.
+Advantages
+ - all the data needed by client can be fetched in a single request.
+ - GraphQL queires are quick evenon slow mobile connections
+ - Manual parsing errors with XML can be avoided
+ - new fields and types can be added without impacting existing queries
+ - not limited to a specific storage engine
+
+Disadvantages
+ - No rate limiting option. That is, in REST API, you can simply specify that we allow only this amount of requests in one day", but in GraphQL, it is difficult to specify this type of statement.
+ - GraphQL is a simple query language. So there must be a mechanism like maximum query depths, query complexity weighting, avoiding recursion, or persistent queries to stop inefficient requests from the client-side.
