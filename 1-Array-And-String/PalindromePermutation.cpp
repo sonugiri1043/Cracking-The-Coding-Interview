@@ -11,33 +11,23 @@
 using namespace std;
 
 bool canFormPalindrome( string input ) {
-  int charFreqCount[ 26 ] = {0};
+   int charFreqCount[26] = {0};
 
-  int charCount = 0;
-  for( int i = 0; i < input.length(); i++ ) {
-    if( input[ i ] == ' ' ) {
-      continue;
+    for (char c : input) {
+        if (isspace(c)) continue;
+        if (isalpha(c)) {
+            charFreqCount[tolower(c) - 'a']++;
+        }
     }
-    if( 'a' <= input[ i ] &&  input[ i ] <= 'z' ) {
-      charFreqCount[ input[ i ] - 'a' ]++;
-      charCount++;
-      continue;
-    }
-    if( 'A' <= input[ i ] &&  input[ i ] <= 'Z' ) {
-      charFreqCount[ input[ i ] - 'A' ]++;
-      charCount++;
-    }    
-  }
-  
-  int oddCount = 0;
-  for( int i=0; i < 26; i++ ) {
-    if( charFreqCount[ i ] % 2 != 0 )
-      oddCount++;
-  }
 
-  if( oddCount == 0 && charCount % 2 == 0 ) {
-    // when char count is even but oddCount is zero.
-    return true;
+    int oddCount = 0;
+    for (int i = 0; i < 26; i++) {
+        if (charFreqCount[i] % 2 != 0) {
+            oddCount++;
+        }
+    }
+
+    return oddCount <= 1;
   }
   
   if( charCount % 2 != 0 && oddCount == 1 ) {
