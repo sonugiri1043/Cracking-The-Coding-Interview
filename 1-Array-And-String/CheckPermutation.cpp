@@ -18,18 +18,14 @@ bool checkPermutation( string string1, string string2 ) {
   if( string1.length() != string2.length() ) {
     return false;
   }
-  int charMap[128] = {0};
-  for( int i=0; i < string1.length(); i++ ) {
-    charMap[ string1[ i ] ]++;
+  int xorValue=0;
+  for(char ch : string1){
+    xorValue^=ch;
   }
-
-  for( int i=0; i < string2.length(); i++ ) {
-    if( charMap[ string2[ i ] ] == 0 ) {
-      return false;
-    }
-    charMap[ string2[ i ] ]--;
+  for(char ch : string2){
+    xorValue^=ch;
   }
-  return true;
+  return xorValue==0;
 }
 
 bool checkPermutationUsingSorting( string input1, string input2 ) {
