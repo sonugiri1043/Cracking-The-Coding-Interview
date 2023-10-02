@@ -20,12 +20,11 @@ bool isDupUsingHashTable( string input ) {
     return true;
   }
 
-  bool map[ 128 ] = { false };
-  for( int i=0; i <  input.length(); i++ ) {
-    if( map[ input[ i ] ] == true )
-      return true;
-    else
-      map[ input[ i ] ]= true;
+  for(int i=0;i<input.length();i++){
+    for(int j=i+1;j<input.length();j++){
+      if(input[i]==input[j])
+        return true;
+    }
   }
   return false;
 }
